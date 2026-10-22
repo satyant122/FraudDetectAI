@@ -1,0 +1,271 @@
+project:
+  name: "FraudDetectAI"
+  version: "0.1.0"
+  random_seed: 42
+
+data:
+  raw_data_path: "data/raw/PS_20174392719_1491204439457_log.csv"
+  interim_data_path: "data/interim/paysim_cleaned.parquet"
+  processed_data_dir: "data/processed"
+  validation_report_path: "reports/metrics/data_validation_report.json"
+
+schema:
+  required_columns:
+    - "step"
+    - "type"
+    - "amount"
+    - "nameOrig"
+    - "oldbalanceOrg"
+    - "newbalanceOrig"
+    - "nameDest"
+    - "oldbalanceDest"
+    - "newbalanceDest"
+    - "isFraud"
+    - "isFlaggedFraud"
+
+  numeric_columns:
+    - "step"
+    - "amount"
+    - "oldbalanceOrg"
+    - "newbalanceOrig"
+    - "oldbalanceDest"
+    - "newbalanceDest"
+    - "isFraud"
+    - "isFlaggedFraud"
+
+  categorical_columns:
+    - "type"
+    - "nameOrig"
+    - "nameDest"
+
+target:
+  name: "isFraud"
+  positive_class: 1
+  negative_class: 0
+
+preprocessing:
+  drop_duplicates: true
+  save_format: "parquet"
+
+eda:
+  summary_output_path: "reports/metrics/eda_summary.json"
+  figures_dir: "reports/figures"
+  sample_size_for_plots: 300000
+  random_seed: 42
+
+modeling:
+  test_size: 0.2
+  random_seed: 42
+  max_training_rows: 1500000
+  metrics_output_path: "reports/metrics/baseline_model_metrics.json"
+  confusion_matrix_figure_path: "reports/figures/baseline_confusion_matrices.png"
+  feature_columns_output_path: "models/artifacts/baseline_feature_columns.json"
+
+  baseline_model_dir: "models/baseline"
+
+  categorical_features:
+    - "type"
+
+  numeric_features:
+    - "step"
+    - "amount"
+    - "oldbalanceOrg"
+    - "newbalanceOrig"
+    - "oldbalanceDest"
+    - "newbalanceDest"
+    - "origin_balance_delta"
+    - "destination_balance_delta"
+    - "amount_to_old_origin_balance_ratio"
+    - "amount_to_old_destination_balance_ratio"
+    - "is_origin_balance_emptied"
+    - "is_destination_balance_unchanged"
+    - "is_transfer_type"
+    - "is_cashout_type"
+
+  baseline_models:
+    logistic_regression:
+      enabled: true
+      output_filename: "logistic_regression.joblib"
+
+    random_forest:
+      enabled: true
+      output_filename: "random_forest.joblib"
+      n_estimators: 150
+      max_depth: 12
+      min_samples_leaf: 5
+
+    xgboost:
+      enabled: true
+      output_filename: "xgboost.joblib"
+      n_estimators: 250
+      max_depth: 5
+      learning_rate: 0.08
+      subsample: 0.9
+      colsample_bytree: 0.9
+
+graph:
+  source_column: "nameOrig"
+  destination_column: "nameDest"
+  amount_column: "amount"
+  transaction_type_column: "type"
+  target_column: "isFraud"
+  step_column: "step"
+
+  max_graph_rows: 1500000
+  graph_output_path: "models/artifacts/transaction_graph.pkl"
+  graph_summary_output_path: "reports/metrics/graph_summary.json"
+
+  top_receivers_plot_path: "reports/figures/top_receivers_by_in_degree.png"
+  top_senders_plot_path: "reports/figures/top_senders_by_out_degree.png"
+
+  top_k_nodes: 20
+  random_seed: 42
+
+graph_features:
+  graph_enhanced_dataset_path: "data/processed/paysim_graph_features.parquet"
+  graph_feature_summary_path: "reports/metrics/graph_feature_summary.json"
+
+  graph_feature_columns:
+    - "sender_in_degree"
+    - "sender_out_degree"
+    - "sender_total_degree"
+    - "sender_total_sent_amount"
+    - "sender_total_received_amount"
+    - "sender_outgoing_transaction_count"
+    - "sender_incoming_transaction_count"
+    - "sender_avg_sent_amount"
+    - "sender_avg_received_amount"
+
+    - "receiver_in_degree"
+    - "receiver_out_degree"
+    - "receiver_total_degree"
+    - "receiver_total_sent_amount"
+    - "receiver_total_received_amount"
+    - "receiver_outgoing_transaction_count"
+    - "receiver_incoming_transaction_count"
+    - "receiver_avg_sent_amount"
+    - "receiver_avg_received_amount"
+
+    - "sender_receiver_edge_transaction_count"
+    - "sender_receiver_edge_total_amount"
+    - "sender_receiver_edge_avg_amount"
+
+graph_modeling:
+  test_size: 0.2
+  random_seed: 42
+  max_training_rows: 1500000
+
+  graph_metrics_output_path: "reports/metrics/graph_model_metrics.json"
+  graph_confusion_matrix_figure_path: "reports/figures/graph_confusion_matrices.png"
+  graph_feature_columns_output_path: "models/artifacts/graph_feature_columns.json"
+  comparison_output_path: "reports/metrics/baseline_vs_graph_comparison.json"
+
+  graph_model_dir: "models/graph_enhanced"
+
+  categorical_features:
+    - "type"
+
+  numeric_features:
+    - "step"
+    - "amount"
+    - "oldbalanceOrg"
+    - "newbalanceOrig"
+    - "oldbalanceDest"
+    - "newbalanceDest"
+    - "origin_balance_delta"
+    - "destination_balance_delta"
+    - "amount_to_old_origin_balance_ratio"
+    - "amount_to_old_destination_balance_ratio"
+    - "is_origin_balance_emptied"
+    - "is_destination_balance_unchanged"
+    - "is_transfer_type"
+    - "is_cashout_type"
+
+    - "sender_in_degree"
+    - "sender_out_degree"
+    - "sender_total_degree"
+    - "sender_total_sent_amount"
+    - "sender_total_received_amount"
+    - "sender_outgoing_transaction_count"
+    - "sender_incoming_transaction_count"
+    - "sender_avg_sent_amount"
+    - "sender_avg_received_amount"
+
+    - "receiver_in_degree"
+    - "receiver_out_degree"
+    - "receiver_total_degree"
+    - "receiver_total_sent_amount"
+    - "receiver_total_received_amount"
+    - "receiver_outgoing_transaction_count"
+    - "receiver_incoming_transaction_count"
+    - "receiver_avg_sent_amount"
+    - "receiver_avg_received_amount"
+
+    - "sender_receiver_edge_transaction_count"
+    - "sender_receiver_edge_total_amount"
+    - "sender_receiver_edge_avg_amount"
+
+  graph_models:
+    logistic_regression:
+      enabled: true
+      output_filename: "logistic_regression_graph.joblib"
+
+    random_forest:
+      enabled: true
+      output_filename: "random_forest_graph.joblib"
+      n_estimators: 150
+      max_depth: 12
+      min_samples_leaf: 5
+
+    xgboost:
+      enabled: true
+      output_filename: "xgboost_graph.joblib"
+      n_estimators: 250
+      max_depth: 5
+      learning_rate: 0.08
+      subsample: 0.9
+      colsample_bytree: 0.9
+
+threshold_tuning:
+  model_name: "xgboost"
+  model_path: "models/graph_enhanced/xgboost_graph.joblib"
+
+  threshold_results_output_path: "reports/metrics/threshold_tuning_results.json"
+  threshold_curve_output_path: "reports/figures/threshold_tuning_curve.png"
+  risk_scoring_report_output_path: "reports/metrics/final_risk_scoring_report.json"
+  scored_transactions_output_path: "data/processed/scored_transactions.parquet"
+
+  optimization_metric: "f1"
+  minimum_recall: 0.80
+
+  threshold_min: 0.01
+  threshold_max: 0.99
+  threshold_step: 0.01
+
+  risk_bands:
+    low_max: 0.25
+    medium_max: 0.50
+    high_max: 0.75
+
+explainability:
+  model_path: "models/graph_enhanced/xgboost_graph.joblib"
+  scored_transactions_path: "data/processed/scored_transactions.parquet"
+
+  feature_metadata_path: "models/artifacts/graph_feature_columns.json"
+
+  feature_importance_report_path: "reports/metrics/feature_importance_report.json"
+  feature_importance_plot_path: "reports/figures/top_feature_importance.png"
+
+  transaction_explanations_output_path: "reports/metrics/top_risky_transaction_explanations.json"
+
+  top_n_features: 25
+  top_n_transactions: 20
+
+  explanation_rules:
+    high_probability_threshold: 0.75
+    high_amount_ratio_threshold: 0.80
+    high_receiver_fraud_rate_threshold: 0.20
+    high_sender_fraud_rate_threshold: 0.20
+    high_edge_fraud_rate_threshold: 0.20
+    high_receiver_in_degree_threshold: 10
+    high_sender_out_degree_threshold: 10
