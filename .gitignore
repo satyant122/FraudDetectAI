@@ -27,6 +27,8 @@ data/external/*
 !data/interim/.gitkeep
 !data/processed/.gitkeep
 !data/external/.gitkeep
+# Allow dashboard artifacts
+!data/processed/scored_transactions.parquet
 
 # Model artifacts
 models/baseline/*
@@ -39,10 +41,12 @@ models/artifacts/*
 # Reports
 reports/figures/*
 reports/metrics/*
-reports/model_cards/*
 !reports/figures/.gitkeep
 !reports/metrics/.gitkeep
 !reports/model_cards/.gitkeep
+# Allow dashboard artifacts
+!reports/metrics/final_risk_scoring_report.json
+!reports/metrics/baseline_vs_graph_comparison.json
 
 # OS files
 .DS_Store

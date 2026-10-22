@@ -1,0 +1,23 @@
+{
+  "decision_threshold": 0.42,
+  "num_transactions_scored": 5000,
+  "risk_band_counts": {
+    "LOW": 4314,
+    "CRITICAL": 279,
+    "HIGH": 237,
+    "MEDIUM": 170
+  },
+  "predicted_fraud_counts": {
+    "0": 4397,
+    "1": 603
+  },
+  "average_fraud_probability": 0.169363,
+  "max_fraud_probability": 0.989634,
+  "min_fraud_probability": 0.000429,
+  "actual_fraud_rate_by_risk_band": {
+    "LOW": 0.0,
+    "MEDIUM": 0.0,
+    "HIGH": 0.6414,
+    "CRITICAL": 0.7527
+  }
+}
