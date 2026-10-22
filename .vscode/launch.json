@@ -1,0 +1,78 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "▶ Run Streamlit App",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "streamlit",
+            "args": [
+                "run",
+                "app/streamlit_app.py",
+                "--server.port=8501",
+                "--server.headless=false"
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src;${workspaceFolder}"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "🔁 Run Full ML Pipeline",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/scripts/run_full_pipeline.py",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src;${workspaceFolder}"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "🌱 Seed Database",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/scripts/seed_database.py",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src;${workspaceFolder}"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "🧪 Run Tests",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": ["tests/", "-v"],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src;${workspaceFolder}"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "🚂 Train Baseline Model",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/scripts/train_baseline.py",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src;${workspaceFolder}"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "🧠 Train Graph Model",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/scripts/train_graph_model.py",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src;${workspaceFolder}"
+            },
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
