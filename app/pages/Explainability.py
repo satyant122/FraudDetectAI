@@ -26,6 +26,11 @@ with tab1:
         feature_rows = feature_report.get("features", [])
 
         if feature_rows:
+            if isinstance(feature_rows, dict):
+                feature_rows = [
+                    {"feature_name": str(k), "importance": float(v)}
+                    for k, v in feature_rows.items()
+                ]
             feature_dataframe = pd.DataFrame(feature_rows)
             st.dataframe(feature_dataframe, use_container_width=True)
         else:

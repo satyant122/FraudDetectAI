@@ -1,33 +1,45 @@
 {
-  "num_transactions": 6362620,
-  "num_features": 11,
-  "fraud_rate": 0.00129,
+  "dataset_shape": {
+    "num_rows": 6362620,
+    "num_columns": 11
+  },
   "class_distribution": {
-    "0": 6354407,
-    "1": 8213
+    "target_column": "isFraud",
+    "total_rows": 6362620,
+    "counts": {
+      "0": 6354407,
+      "1": 8213
+    },
+    "percentages": {
+      "0": 0.99871,
+      "1": 0.00129
+    }
   },
-  "transaction_type_counts": {
-    "CASH_OUT": 2237500,
-    "PAYMENT": 2151495,
-    "CASH_IN": 1399284,
-    "TRANSFER": 532909,
-    "DEBIT": 41432
-  },
-  "amount_statistics": {
-    "mean": 179861.9,
-    "std": 603858.23,
-    "min": 0.0,
-    "25%": 13389.57,
-    "50%": 74871.94,
-    "75%": 208721.26,
-    "max": 92445516.64
-  },
-  "missing_values": {},
-  "fraud_by_type": {
-    "TRANSFER": 4097,
-    "CASH_OUT": 4116,
-    "PAYMENT": 0,
-    "CASH_IN": 0,
-    "DEBIT": 0
+  "transaction_type_summary": {
+    "TRANSFER": {
+      "total_transactions": 532909,
+      "fraud_transactions": 4097,
+      "fraud_rate": 0.007688
+    },
+    "CASH_OUT": {
+      "total_transactions": 2237500,
+      "fraud_transactions": 4116,
+      "fraud_rate": 0.00184
+    },
+    "PAYMENT": {
+      "total_transactions": 2151495,
+      "fraud_transactions": 0,
+      "fraud_rate": 0.0
+    },
+    "CASH_IN": {
+      "total_transactions": 1399284,
+      "fraud_transactions": 0,
+      "fraud_rate": 0.0
+    },
+    "DEBIT": {
+      "total_transactions": 41432,
+      "fraud_transactions": 0,
+      "fraud_rate": 0.0
+    }
   }
 }

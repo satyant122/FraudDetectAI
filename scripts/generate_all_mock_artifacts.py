@@ -5,6 +5,7 @@ import random
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -21,36 +22,104 @@ def ensure(p: Path) -> Path:
     return p
 
 
+# ── 0. data/processed/scored_transactions.parquet ────────────────────────
+def gen_scored_transactions(n: int = 5000) -> Path:
+    transaction_types = ["TRANSFER", "CASH_OUT", "PAYMENT", "DEBIT", "CASH_IN"]
+    type_weights = [0.25, 0.30, 0.25, 0.10, 0.10]
+
+    fraud_prob = np.concatenate([
+        np.random.beta(1.5, 15, size=int(n * 0.87)),
+        np.random.beta(5, 3, size=int(n * 0.08)),
+        np.random.beta(9, 2, size=int(n * 0.05)),
+    ])
+    fraud_prob = np.clip(fraud_prob[:n], 0.0, 1.0)
+    np.random.shuffle(fraud_prob)
+
+    threshold = 0.42
+    predicted_fraud = (fraud_prob >= threshold).astype(int)
+
+    def get_risk_band(p):
+        if p < 0.30: return "LOW"
+        if p < 0.55: return "MEDIUM"
+        if p < 0.75: return "HIGH"
+        return "CRITICAL"
+
+    amounts = np.random.exponential(scale=15_000, size=n).clip(1, 2_000_000)
+    t_types = np.random.choice(transaction_types, size=n, p=type_weights)
+    actual_fraud = ((fraud_prob > 0.60) & (np.random.rand(n) < 0.78)).astype(int)
+
+    old_org = np.random.exponential(50_000, n)
+    new_org = np.maximum(0, old_org - amounts)
+    old_dest = np.random.exponential(60_000, n)
+    new_dest = old_dest + amounts
+
+    df = pd.DataFrame({
+        "nameOrig": [f"C{100_000 + i}" for i in range(n)],
+        "nameDest": [f"M{900_000 + (i % 850)}" if t == "PAYMENT" else f"C{200_000 + (i % 1200)}" for i, t in enumerate(t_types)],
+        "type": t_types,
+        "amount": np.round(amounts, 2),
+        "oldbalanceOrg": np.round(old_org, 2),
+        "newbalanceOrig": np.round(new_org, 2),
+        "oldbalanceDest": np.round(old_dest, 2),
+        "newbalanceDest": np.round(new_dest, 2),
+        "origin_balance_delta": np.round(old_org - new_org, 2),
+        "destination_balance_delta": np.round(new_dest - old_dest, 2),
+        "amount_to_old_origin_balance_ratio": np.round(amounts / (old_org + 1.0), 4),
+        "sender_out_degree": np.random.poisson(3, n) + 1,
+        "receiver_in_degree": np.random.poisson(5, n) + 1,
+        "receiver_incoming_fraud_rate": np.round(np.where(fraud_prob > 0.5, np.random.uniform(0.1, 0.8, n), np.random.uniform(0.0, 0.05, n)), 4),
+        "sender_receiver_edge_fraud_rate": np.round(np.where(fraud_prob > 0.6, np.random.uniform(0.2, 0.9, n), 0.0), 4),
+        "isFraud": actual_fraud,
+        "fraud_probability": np.round(fraud_prob, 6),
+        "predicted_fraud": predicted_fraud,
+        "risk_band": [get_risk_band(p) for p in fraud_prob],
+    })
+
+    df = df.sort_values("fraud_probability", ascending=False).reset_index(drop=True)
+    path = ROOT / "data/processed/scored_transactions.parquet"
+    df.to_parquet(ensure(path), index=False)
+    return path
+
+
 # ── 1. reports/metrics/eda_summary.json ──────────────────────────────────
 def gen_eda_summary():
     data = {
-        "num_transactions": 6362620,
-        "num_features": 11,
-        "fraud_rate": 0.00129,
-        "class_distribution": {"0": 6354407, "1": 8213},
-        "transaction_type_counts": {
-            "CASH_OUT": 2237500,
-            "PAYMENT": 2151495,
-            "CASH_IN": 1399284,
-            "TRANSFER": 532909,
-            "DEBIT": 41432,
+        "dataset_shape": {
+            "num_rows": 6362620,
+            "num_columns": 11,
         },
-        "amount_statistics": {
-            "mean": 179861.90,
-            "std": 603858.23,
-            "min": 0.0,
-            "25%": 13389.57,
-            "50%": 74871.94,
-            "75%": 208721.26,
-            "max": 92445516.64,
+        "class_distribution": {
+            "target_column": "isFraud",
+            "total_rows": 6362620,
+            "counts": {"0": 6354407, "1": 8213},
+            "percentages": {"0": 0.99871, "1": 0.00129},
         },
-        "missing_values": {},
-        "fraud_by_type": {
-            "TRANSFER": 4097,
-            "CASH_OUT": 4116,
-            "PAYMENT": 0,
-            "CASH_IN": 0,
-            "DEBIT": 0,
+        "transaction_type_summary": {
+            "TRANSFER": {
+                "total_transactions": 532909,
+                "fraud_transactions": 4097,
+                "fraud_rate": 0.007688,
+            },
+            "CASH_OUT": {
+                "total_transactions": 2237500,
+                "fraud_transactions": 4116,
+                "fraud_rate": 0.001840,
+            },
+            "PAYMENT": {
+                "total_transactions": 2151495,
+                "fraud_transactions": 0,
+                "fraud_rate": 0.0,
+            },
+            "CASH_IN": {
+                "total_transactions": 1399284,
+                "fraud_transactions": 0,
+                "fraud_rate": 0.0,
+            },
+            "DEBIT": {
+                "total_transactions": 41432,
+                "fraud_transactions": 0,
+                "fraud_rate": 0.0,
+            },
         },
     }
     path = ROOT / "reports/metrics/eda_summary.json"
@@ -61,17 +130,28 @@ def gen_eda_summary():
 
 # ── 2. reports/metrics/graph_summary.json ────────────────────────────────
 def gen_graph_summary():
+    top_receivers = [
+        {"account": f"C{200_000 + i}", "in_degree": int(215 - i * 9), "total_amount_in": float(12_000_000 - i * 450_000)}
+        for i in range(15)
+    ]
+    top_senders = [
+        {"account": f"C{100_000 + i}", "out_degree": int(142 - i * 6), "total_amount_out": float(8_500_000 - i * 320_000)}
+        for i in range(15)
+    ]
     data = {
-        "num_nodes": 120450,
-        "num_edges": 532909,
-        "average_degree": 8.85,
-        "density": 0.0000735,
-        "num_connected_components": 8432,
-        "largest_component_size": 98210,
-        "average_clustering_coefficient": 0.0021,
-        "transaction_types_in_graph": ["TRANSFER", "CASH_OUT"],
-        "fraud_edges": 8213,
-        "non_fraud_edges": 524696,
+        "graph_summary": {
+            "num_nodes": 120450,
+            "num_edges": 532909,
+            "total_transaction_count": 532909,
+            "total_fraud_count": 8213,
+            "num_weakly_connected_components": 8432,
+            "largest_weakly_connected_component_size": 98210,
+            "density": 0.0000735,
+        },
+        "degree_artifacts": {
+            "top_receivers_by_in_degree": top_receivers,
+            "top_senders_by_out_degree": top_senders,
+        },
     }
     path = ROOT / "reports/metrics/graph_summary.json"
     with ensure(path).open("w") as f:
@@ -84,24 +164,30 @@ def gen_graph_feature_summary():
     data = {
         "num_samples": 5000,
         "graph_features": {
-            "sender_out_degree":       {"mean": 4.23, "std": 6.81, "min": 1, "max": 142},
-            "sender_in_degree":        {"mean": 2.15, "std": 4.32, "min": 0, "max": 98},
-            "receiver_in_degree":      {"mean": 5.67, "std": 9.45, "min": 1, "max": 215},
-            "receiver_out_degree":     {"mean": 1.89, "std": 3.21, "min": 0, "max": 67},
-            "sender_total_amount_out": {"mean": 185432.1, "std": 412305.6, "min": 100.0, "max": 8500000.0},
-            "receiver_total_amount_in":{"mean": 210543.8, "std": 520412.3, "min": 50.0, "max": 12000000.0},
-            "receiver_fraud_rate":     {"mean": 0.0089, "std": 0.045, "min": 0.0, "max": 1.0},
-            "sender_receiver_edge_fraud_rate": {"mean": 0.0052, "std": 0.038, "min": 0.0, "max": 1.0},
-        },
-        "correlation_with_fraud": {
-            "sender_out_degree": 0.12,
-            "sender_in_degree": 0.05,
-            "receiver_in_degree": -0.03,
-            "receiver_out_degree": 0.08,
-            "sender_total_amount_out": 0.15,
-            "receiver_total_amount_in": 0.09,
-            "receiver_fraud_rate": 0.42,
-            "sender_receiver_edge_fraud_rate": 0.38,
+            "sender_out_degree": {
+                "mean": 4.23, "median": 3.0, "min": 1, "max": 142,
+                "mean_by_class": {"0": 3.95, "1": 7.42},
+            },
+            "sender_in_degree": {
+                "mean": 2.15, "median": 1.0, "min": 0, "max": 98,
+                "mean_by_class": {"0": 2.18, "1": 1.76},
+            },
+            "receiver_in_degree": {
+                "mean": 5.67, "median": 4.0, "min": 1, "max": 215,
+                "mean_by_class": {"0": 5.41, "1": 9.85},
+            },
+            "receiver_out_degree": {
+                "mean": 1.89, "median": 1.0, "min": 0, "max": 67,
+                "mean_by_class": {"0": 1.91, "1": 1.62},
+            },
+            "receiver_fraud_rate": {
+                "mean": 0.0089, "median": 0.0, "min": 0.0, "max": 1.0,
+                "mean_by_class": {"0": 0.0021, "1": 0.4850},
+            },
+            "sender_receiver_edge_fraud_rate": {
+                "mean": 0.0052, "median": 0.0, "min": 0.0, "max": 1.0,
+                "mean_by_class": {"0": 0.0008, "1": 0.4120},
+            },
         },
     }
     path = ROOT / "reports/metrics/graph_feature_summary.json"
@@ -160,15 +246,15 @@ def gen_graph_model_metrics():
 
 # ── 6. reports/metrics/threshold_tuning_results.json ─────────────────────
 def gen_threshold_tuning():
-    thresholds = [round(t, 2) for t in np.arange(0.05, 1.0, 0.05)]
+    thresholds = [round(float(t), 2) for t in np.arange(0.05, 1.0, 0.05)]
     results = []
     for t in thresholds:
         prec = min(0.99, 0.5 + t * 0.5 + random.uniform(-0.03, 0.03))
         rec = max(0.05, 1.0 - t * 0.9 + random.uniform(-0.03, 0.03))
         f1 = 2 * prec * rec / (prec + rec) if (prec + rec) > 0 else 0
         results.append({
-            "threshold": t, "precision": round(prec, 4),
-            "recall": round(rec, 4), "f1": round(f1, 4),
+            "threshold": float(t), "precision": round(float(prec), 4),
+            "recall": round(float(rec), 4), "f1": round(float(f1), 4),
         })
     best = max(results, key=lambda r: r["f1"])
     data = {
@@ -186,26 +272,24 @@ def gen_threshold_tuning():
 
 # ── 7. reports/metrics/feature_importance_report.json ────────────────────
 def gen_feature_importance():
-    features = {
-        "receiver_fraud_rate": 0.182,
-        "sender_receiver_edge_fraud_rate": 0.156,
-        "amount": 0.134,
-        "oldbalanceOrg": 0.098,
-        "newbalanceOrig": 0.087,
-        "sender_total_amount_out": 0.072,
-        "receiver_total_amount_in": 0.065,
-        "sender_out_degree": 0.054,
-        "oldbalanceDest": 0.048,
-        "newbalanceDest": 0.041,
-        "receiver_in_degree": 0.028,
-        "sender_in_degree": 0.019,
-        "receiver_out_degree": 0.016,
-    }
+    features_list = [
+        {"feature_name": "receiver_fraud_rate", "importance": 0.182, "importance_normalized": 0.182},
+        {"feature_name": "sender_receiver_edge_fraud_rate", "importance": 0.156, "importance_normalized": 0.156},
+        {"feature_name": "amount", "importance": 0.134, "importance_normalized": 0.134},
+        {"feature_name": "oldbalanceOrg", "importance": 0.098, "importance_normalized": 0.098},
+        {"feature_name": "newbalanceOrig", "importance": 0.087, "importance_normalized": 0.087},
+        {"feature_name": "sender_total_amount_out", "importance": 0.072, "importance_normalized": 0.072},
+        {"feature_name": "receiver_total_amount_in", "importance": 0.065, "importance_normalized": 0.065},
+        {"feature_name": "sender_out_degree", "importance": 0.054, "importance_normalized": 0.054},
+        {"feature_name": "oldbalanceDest", "importance": 0.048, "importance_normalized": 0.048},
+        {"feature_name": "newbalanceDest", "importance": 0.041, "importance_normalized": 0.041},
+        {"feature_name": "receiver_in_degree", "importance": 0.028, "importance_normalized": 0.028},
+        {"feature_name": "sender_in_degree", "importance": 0.019, "importance_normalized": 0.019},
+        {"feature_name": "receiver_out_degree", "importance": 0.016, "importance_normalized": 0.016},
+    ]
     data = {
-        "model_name": "random_forest_graph_enhanced",
-        "importance_type": "feature_importances_",
-        "features": features,
-        "top_n": 13,
+        "top_n_features": len(features_list),
+        "features": features_list,
     }
     path = ROOT / "reports/metrics/feature_importance_report.json"
     with ensure(path).open("w") as f:
@@ -216,27 +300,25 @@ def gen_feature_importance():
 # ── 8. reports/metrics/top_risky_transaction_explanations.json ───────────
 def gen_explanations():
     explanations = []
-    for i in range(10):
-        prob = round(0.95 - i * 0.04 + random.uniform(-0.01, 0.01), 4)
+    for i in range(15):
+        prob = round(0.96 - i * 0.03 + random.uniform(-0.01, 0.01), 4)
         explanations.append({
-            "transaction_id": f"TXN{100000 + i}",
-            "fraud_probability": prob,
+            "rank": i + 1,
+            "row_index": i,
+            "sender": f"C{100_000 + i}",
+            "receiver": f"C{200_000 + i}",
+            "transaction_type": "TRANSFER" if i % 2 == 0 else "CASH_OUT",
+            "amount": round(float(random.uniform(50000, 750000)), 2),
+            "fraud_probability": float(prob),
             "predicted_fraud": 1,
             "risk_band": "CRITICAL" if prob >= 0.75 else "HIGH",
-            "type": random.choice(["TRANSFER", "CASH_OUT"]),
-            "amount": round(random.uniform(50000, 500000), 2),
-            "explanation": {
-                "top_features": [
-                    {"feature": "receiver_fraud_rate", "shap_value": round(random.uniform(0.15, 0.35), 4)},
-                    {"feature": "amount", "shap_value": round(random.uniform(0.08, 0.20), 4)},
-                    {"feature": "sender_receiver_edge_fraud_rate", "shap_value": round(random.uniform(0.05, 0.15), 4)},
-                    {"feature": "oldbalanceOrg", "shap_value": round(random.uniform(0.02, 0.10), 4)},
-                    {"feature": "sender_out_degree", "shap_value": round(random.uniform(0.01, 0.08), 4)},
-                ],
-                "summary": f"Transaction flagged as {'CRITICAL' if prob >= 0.75 else 'HIGH'} because: "
-                           f"receiver has high fraud rate, large transfer amount, "
-                           f"sender-receiver relationship has previous fraud signal.",
-            },
+            "actual_is_fraud": 1 if prob >= 0.85 else 0,
+            "reasons": [
+                f"Receiver has historical incoming fraud rate of {round(random.uniform(0.4, 0.9), 2)}",
+                f"Origin balance was completely drained after this {random.choice(['TRANSFER', 'CASH_OUT'])}",
+                "Transaction amount exceeds 95th percentile of normal customer activity",
+                "High sender out-degree within current 1-hour window",
+            ],
         })
     data = {"num_explanations": len(explanations), "explanations": explanations}
     path = ROOT / "reports/metrics/top_risky_transaction_explanations.json"
@@ -262,14 +344,14 @@ def gen_degree_chart(title, ylabel, filename, names, values, color):
 
 
 def gen_top_receivers():
-    names = [f"C{random.randint(100000,999999)}" for _ in range(15)]
-    vals = sorted([random.randint(20, 215) for _ in range(15)], reverse=True)
+    names = [f"C{200_000 + i}" for i in range(15)]
+    vals = [int(215 - i * 9) for i in range(15)]
     return gen_degree_chart("Top Receivers by In-Degree", "Receiver", "top_receivers_by_in_degree.png", names, vals, "#4C78A8")
 
 
 def gen_top_senders():
-    names = [f"C{random.randint(100000,999999)}" for _ in range(15)]
-    vals = sorted([random.randint(15, 142) for _ in range(15)], reverse=True)
+    names = [f"C{100_000 + i}" for i in range(15)]
+    vals = [int(142 - i * 6) for i in range(15)]
     return gen_degree_chart("Top Senders by Out-Degree", "Sender", "top_senders_by_out_degree.png", names, vals, "#E45756")
 
 
@@ -368,6 +450,7 @@ def gen_feature_importance_plot():
 
 def main():
     generators = [
+        ("Scored transactions",      gen_scored_transactions),
         ("EDA summary",              gen_eda_summary),
         ("Graph summary",            gen_graph_summary),
         ("Graph feature summary",    gen_graph_feature_summary),

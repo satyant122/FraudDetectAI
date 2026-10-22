@@ -1,15 +1,167 @@
 {
-  "num_nodes": 120450,
-  "num_edges": 532909,
-  "average_degree": 8.85,
-  "density": 7.35e-05,
-  "num_connected_components": 8432,
-  "largest_component_size": 98210,
-  "average_clustering_coefficient": 0.0021,
-  "transaction_types_in_graph": [
-    "TRANSFER",
-    "CASH_OUT"
-  ],
-  "fraud_edges": 8213,
-  "non_fraud_edges": 524696
+  "graph_summary": {
+    "num_nodes": 120450,
+    "num_edges": 532909,
+    "total_transaction_count": 532909,
+    "total_fraud_count": 8213,
+    "num_weakly_connected_components": 8432,
+    "largest_weakly_connected_component_size": 98210,
+    "density": 7.35e-05
+  },
+  "degree_artifacts": {
+    "top_receivers_by_in_degree": [
+      {
+        "account": "C200000",
+        "in_degree": 215,
+        "total_amount_in": 12000000.0
+      },
+      {
+        "account": "C200001",
+        "in_degree": 206,
+        "total_amount_in": 11550000.0
+      },
+      {
+        "account": "C200002",
+        "in_degree": 197,
+        "total_amount_in": 11100000.0
+      },
+      {
+        "account": "C200003",
+        "in_degree": 188,
+        "total_amount_in": 10650000.0
+      },
+      {
+        "account": "C200004",
+        "in_degree": 179,
+        "total_amount_in": 10200000.0
+      },
+      {
+        "account": "C200005",
+        "in_degree": 170,
+        "total_amount_in": 9750000.0
+      },
+      {
+        "account": "C200006",
+        "in_degree": 161,
+        "total_amount_in": 9300000.0
+      },
+      {
+        "account": "C200007",
+        "in_degree": 152,
+        "total_amount_in": 8850000.0
+      },
+      {
+        "account": "C200008",
+        "in_degree": 143,
+        "total_amount_in": 8400000.0
+      },
+      {
+        "account": "C200009",
+        "in_degree": 134,
+        "total_amount_in": 7950000.0
+      },
+      {
+        "account": "C200010",
+        "in_degree": 125,
+        "total_amount_in": 7500000.0
+      },
+      {
+        "account": "C200011",
+        "in_degree": 116,
+        "total_amount_in": 7050000.0
+      },
+      {
+        "account": "C200012",
+        "in_degree": 107,
+        "total_amount_in": 6600000.0
+      },
+      {
+        "account": "C200013",
+        "in_degree": 98,
+        "total_amount_in": 6150000.0
+      },
+      {
+        "account": "C200014",
+        "in_degree": 89,
+        "total_amount_in": 5700000.0
+      }
+    ],
+    "top_senders_by_out_degree": [
+      {
+        "account": "C100000",
+        "out_degree": 142,
+        "total_amount_out": 8500000.0
+      },
+      {
+        "account": "C100001",
+        "out_degree": 136,
+        "total_amount_out": 8180000.0
+      },
+      {
+        "account": "C100002",
+        "out_degree": 130,
+        "total_amount_out": 7860000.0
+      },
+      {
+        "account": "C100003",
+        "out_degree": 124,
+        "total_amount_out": 7540000.0
+      },
+      {
+        "account": "C100004",
+        "out_degree": 118,
+        "total_amount_out": 7220000.0
+      },
+      {
+        "account": "C100005",
+        "out_degree": 112,
+        "total_amount_out": 6900000.0
+      },
+      {
+        "account": "C100006",
+        "out_degree": 106,
+        "total_amount_out": 6580000.0
+      },
+      {
+        "account": "C100007",
+        "out_degree": 100,
+        "total_amount_out": 6260000.0
+      },
+      {
+        "account": "C100008",
+        "out_degree": 94,
+        "total_amount_out": 5940000.0
+      },
+      {
+        "account": "C100009",
+        "out_degree": 88,
+        "total_amount_out": 5620000.0
+      },
+      {
+        "account": "C100010",
+        "out_degree": 82,
+        "total_amount_out": 5300000.0
+      },
+      {
+        "account": "C100011",
+        "out_degree": 76,
+        "total_amount_out": 4980000.0
+      },
+      {
+        "account": "C100012",
+        "out_degree": 70,
+        "total_amount_out": 4660000.0
+      },
+      {
+        "account": "C100013",
+        "out_degree": 64,
+        "total_amount_out": 4340000.0
+      },
+      {
+        "account": "C100014",
+        "out_degree": 58,
+        "total_amount_out": 4020000.0
+      }
+    ]
+  }
 }

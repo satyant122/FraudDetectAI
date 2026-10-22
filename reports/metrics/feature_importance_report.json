@@ -1,20 +1,70 @@
 {
-  "model_name": "random_forest_graph_enhanced",
-  "importance_type": "feature_importances_",
-  "features": {
-    "receiver_fraud_rate": 0.182,
-    "sender_receiver_edge_fraud_rate": 0.156,
-    "amount": 0.134,
-    "oldbalanceOrg": 0.098,
-    "newbalanceOrig": 0.087,
-    "sender_total_amount_out": 0.072,
-    "receiver_total_amount_in": 0.065,
-    "sender_out_degree": 0.054,
-    "oldbalanceDest": 0.048,
-    "newbalanceDest": 0.041,
-    "receiver_in_degree": 0.028,
-    "sender_in_degree": 0.019,
-    "receiver_out_degree": 0.016
-  },
-  "top_n": 13
+  "top_n_features": 13,
+  "features": [
+    {
+      "feature_name": "receiver_fraud_rate",
+      "importance": 0.182,
+      "importance_normalized": 0.182
+    },
+    {
+      "feature_name": "sender_receiver_edge_fraud_rate",
+      "importance": 0.156,
+      "importance_normalized": 0.156
+    },
+    {
+      "feature_name": "amount",
+      "importance": 0.134,
+      "importance_normalized": 0.134
+    },
+    {
+      "feature_name": "oldbalanceOrg",
+      "importance": 0.098,
+      "importance_normalized": 0.098
+    },
+    {
+      "feature_name": "newbalanceOrig",
+      "importance": 0.087,
+      "importance_normalized": 0.087
+    },
+    {
+      "feature_name": "sender_total_amount_out",
+      "importance": 0.072,
+      "importance_normalized": 0.072
+    },
+    {
+      "feature_name": "receiver_total_amount_in",
+      "importance": 0.065,
+      "importance_normalized": 0.065
+    },
+    {
+      "feature_name": "sender_out_degree",
+      "importance": 0.054,
+      "importance_normalized": 0.054
+    },
+    {
+      "feature_name": "oldbalanceDest",
+      "importance": 0.048,
+      "importance_normalized": 0.048
+    },
+    {
+      "feature_name": "newbalanceDest",
+      "importance": 0.041,
+      "importance_normalized": 0.041
+    },
+    {
+      "feature_name": "receiver_in_degree",
+      "importance": 0.028,
+      "importance_normalized": 0.028
+    },
+    {
+      "feature_name": "sender_in_degree",
+      "importance": 0.019,
+      "importance_normalized": 0.019
+    },
+    {
+      "feature_name": "receiver_out_degree",
+      "importance": 0.016,
+      "importance_normalized": 0.016
+    }
+  ]
 }

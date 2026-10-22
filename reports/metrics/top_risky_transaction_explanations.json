@@ -1,335 +1,275 @@
 {
-  "num_explanations": 10,
+  "num_explanations": 15,
   "explanations": [
     {
-      "transaction_id": "TXN100000",
-      "fraud_probability": 0.9572,
+      "rank": 1,
+      "row_index": 0,
+      "sender": "C100000",
+      "receiver": "C200000",
+      "transaction_type": "TRANSFER",
+      "amount": 454146.5,
+      "fraud_probability": 0.9672,
       "predicted_fraud": 1,
       "risk_band": "CRITICAL",
-      "type": "TRANSFER",
-      "amount": 367057.33,
-      "explanation": {
-        "top_features": [
-          {
-            "feature": "receiver_fraud_rate",
-            "shap_value": 0.1592
-          },
-          {
-            "feature": "amount",
-            "shap_value": 0.1073
-          },
-          {
-            "feature": "sender_receiver_edge_fraud_rate",
-            "shap_value": 0.0789
-          },
-          {
-            "feature": "oldbalanceOrg",
-            "shap_value": 0.0264
-          },
-          {
-            "feature": "sender_out_degree",
-            "shap_value": 0.0263
-          }
-        ],
-        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
-      }
+      "actual_is_fraud": 1,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.75",
+        "Origin balance was completely drained after this TRANSFER",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
     },
     {
-      "transaction_id": "TXN100001",
-      "fraud_probability": 0.902,
+      "rank": 2,
+      "row_index": 1,
+      "sender": "C100001",
+      "receiver": "C200001",
+      "transaction_type": "CASH_OUT",
+      "amount": 591147.84,
+      "fraud_probability": 0.9332,
       "predicted_fraud": 1,
       "risk_band": "CRITICAL",
-      "type": "CASH_OUT",
-      "amount": 254034.64,
-      "explanation": {
-        "top_features": [
-          {
-            "feature": "receiver_fraud_rate",
-            "shap_value": 0.3168
-          },
-          {
-            "feature": "amount",
-            "shap_value": 0.0995
-          },
-          {
-            "feature": "sender_receiver_edge_fraud_rate",
-            "shap_value": 0.0855
-          },
-          {
-            "feature": "oldbalanceOrg",
-            "shap_value": 0.0736
-          },
-          {
-            "feature": "sender_out_degree",
-            "shap_value": 0.0591
-          }
-        ],
-        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
-      }
+      "actual_is_fraud": 1,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.89",
+        "Origin balance was completely drained after this TRANSFER",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
     },
     {
-      "transaction_id": "TXN100002",
-      "fraud_probability": 0.8737,
+      "rank": 3,
+      "row_index": 2,
+      "sender": "C100002",
+      "receiver": "C200002",
+      "transaction_type": "TRANSFER",
+      "amount": 316088.36,
+      "fraud_probability": 0.9073,
       "predicted_fraud": 1,
       "risk_band": "CRITICAL",
-      "type": "TRANSFER",
-      "amount": 324108.95,
-      "explanation": {
-        "top_features": [
-          {
-            "feature": "receiver_fraud_rate",
-            "shap_value": 0.1842
-          },
-          {
-            "feature": "amount",
-            "shap_value": 0.1675
-          },
-          {
-            "feature": "sender_receiver_edge_fraud_rate",
-            "shap_value": 0.0663
-          },
-          {
-            "feature": "oldbalanceOrg",
-            "shap_value": 0.0504
-          },
-          {
-            "feature": "sender_out_degree",
-            "shap_value": 0.0793
-          }
-        ],
-        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
-      }
+      "actual_is_fraud": 1,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.63",
+        "Origin balance was completely drained after this CASH_OUT",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
     },
     {
-      "transaction_id": "TXN100003",
-      "fraud_probability": 0.8328,
+      "rank": 4,
+      "row_index": 3,
+      "sender": "C100003",
+      "receiver": "C200003",
+      "transaction_type": "CASH_OUT",
+      "amount": 298689.49,
+      "fraud_probability": 0.8633,
       "predicted_fraud": 1,
       "risk_band": "CRITICAL",
-      "type": "TRANSFER",
-      "amount": 358076.41,
-      "explanation": {
-        "top_features": [
-          {
-            "feature": "receiver_fraud_rate",
-            "shap_value": 0.3186
-          },
-          {
-            "feature": "amount",
-            "shap_value": 0.1731
-          },
-          {
-            "feature": "sender_receiver_edge_fraud_rate",
-            "shap_value": 0.0729
-          },
-          {
-            "feature": "oldbalanceOrg",
-            "shap_value": 0.0226
-          },
-          {
-            "feature": "sender_out_degree",
-            "shap_value": 0.0321
-          }
-        ],
-        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
-      }
+      "actual_is_fraud": 1,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.74",
+        "Origin balance was completely drained after this TRANSFER",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
     },
     {
-      "transaction_id": "TXN100004",
-      "fraud_probability": 0.7854,
+      "rank": 5,
+      "row_index": 4,
+      "sender": "C100004",
+      "receiver": "C200004",
+      "transaction_type": "TRANSFER",
+      "amount": 169797.05,
+      "fraud_probability": 0.8422,
       "predicted_fraud": 1,
       "risk_band": "CRITICAL",
-      "type": "TRANSFER",
-      "amount": 460911.26,
-      "explanation": {
-        "top_features": [
-          {
-            "feature": "receiver_fraud_rate",
-            "shap_value": 0.2634
-          },
-          {
-            "feature": "amount",
-            "shap_value": 0.1661
-          },
-          {
-            "feature": "sender_receiver_edge_fraud_rate",
-            "shap_value": 0.0713
-          },
-          {
-            "feature": "oldbalanceOrg",
-            "shap_value": 0.0599
-          },
-          {
-            "feature": "sender_out_degree",
-            "shap_value": 0.0719
-          }
-        ],
-        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
-      }
+      "actual_is_fraud": 0,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.76",
+        "Origin balance was completely drained after this TRANSFER",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
     },
     {
-      "transaction_id": "TXN100005",
-      "fraud_probability": 0.7529,
+      "rank": 6,
+      "row_index": 5,
+      "sender": "C100005",
+      "receiver": "C200005",
+      "transaction_type": "CASH_OUT",
+      "amount": 238963.48,
+      "fraud_probability": 0.8092,
       "predicted_fraud": 1,
       "risk_band": "CRITICAL",
-      "type": "TRANSFER",
-      "amount": 169196.07,
-      "explanation": {
-        "top_features": [
-          {
-            "feature": "receiver_fraud_rate",
-            "shap_value": 0.1993
-          },
-          {
-            "feature": "amount",
-            "shap_value": 0.1474
-          },
-          {
-            "feature": "sender_receiver_edge_fraud_rate",
-            "shap_value": 0.0763
-          },
-          {
-            "feature": "oldbalanceOrg",
-            "shap_value": 0.0668
-          },
-          {
-            "feature": "sender_out_degree",
-            "shap_value": 0.0728
-          }
-        ],
-        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
-      }
+      "actual_is_fraud": 0,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.86",
+        "Origin balance was completely drained after this TRANSFER",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
     },
     {
-      "transaction_id": "TXN100006",
-      "fraud_probability": 0.708,
+      "rank": 7,
+      "row_index": 6,
+      "sender": "C100006",
+      "receiver": "C200006",
+      "transaction_type": "TRANSFER",
+      "amount": 639996.34,
+      "fraud_probability": 0.7837,
+      "predicted_fraud": 1,
+      "risk_band": "CRITICAL",
+      "actual_is_fraud": 0,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.79",
+        "Origin balance was completely drained after this TRANSFER",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
+    },
+    {
+      "rank": 8,
+      "row_index": 7,
+      "sender": "C100007",
+      "receiver": "C200007",
+      "transaction_type": "CASH_OUT",
+      "amount": 613532.06,
+      "fraud_probability": 0.7564,
+      "predicted_fraud": 1,
+      "risk_band": "CRITICAL",
+      "actual_is_fraud": 0,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.6",
+        "Origin balance was completely drained after this TRANSFER",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
+    },
+    {
+      "rank": 9,
+      "row_index": 8,
+      "sender": "C100008",
+      "receiver": "C200008",
+      "transaction_type": "TRANSFER",
+      "amount": 710036.8,
+      "fraud_probability": 0.7142,
       "predicted_fraud": 1,
       "risk_band": "HIGH",
-      "type": "TRANSFER",
-      "amount": 498796.6,
-      "explanation": {
-        "top_features": [
-          {
-            "feature": "receiver_fraud_rate",
-            "shap_value": 0.1777
-          },
-          {
-            "feature": "amount",
-            "shap_value": 0.1392
-          },
-          {
-            "feature": "sender_receiver_edge_fraud_rate",
-            "shap_value": 0.1256
-          },
-          {
-            "feature": "oldbalanceOrg",
-            "shap_value": 0.0889
-          },
-          {
-            "feature": "sender_out_degree",
-            "shap_value": 0.0207
-          }
-        ],
-        "summary": "Transaction flagged as HIGH because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
-      }
+      "actual_is_fraud": 0,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.84",
+        "Origin balance was completely drained after this CASH_OUT",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
     },
     {
-      "transaction_id": "TXN100007",
-      "fraud_probability": 0.6632,
+      "rank": 10,
+      "row_index": 9,
+      "sender": "C100009",
+      "receiver": "C200009",
+      "transaction_type": "CASH_OUT",
+      "amount": 399461.88,
+      "fraud_probability": 0.6843,
       "predicted_fraud": 1,
       "risk_band": "HIGH",
-      "type": "CASH_OUT",
-      "amount": 318384.06,
-      "explanation": {
-        "top_features": [
-          {
-            "feature": "receiver_fraud_rate",
-            "shap_value": 0.227
-          },
-          {
-            "feature": "amount",
-            "shap_value": 0.1515
-          },
-          {
-            "feature": "sender_receiver_edge_fraud_rate",
-            "shap_value": 0.0968
-          },
-          {
-            "feature": "oldbalanceOrg",
-            "shap_value": 0.0401
-          },
-          {
-            "feature": "sender_out_degree",
-            "shap_value": 0.0487
-          }
-        ],
-        "summary": "Transaction flagged as HIGH because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
-      }
+      "actual_is_fraud": 0,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.84",
+        "Origin balance was completely drained after this CASH_OUT",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
     },
     {
-      "transaction_id": "TXN100008",
-      "fraud_probability": 0.6388,
+      "rank": 11,
+      "row_index": 10,
+      "sender": "C100010",
+      "receiver": "C200010",
+      "transaction_type": "TRANSFER",
+      "amount": 147741.22,
+      "fraud_probability": 0.6529,
       "predicted_fraud": 1,
       "risk_band": "HIGH",
-      "type": "TRANSFER",
-      "amount": 356769.67,
-      "explanation": {
-        "top_features": [
-          {
-            "feature": "receiver_fraud_rate",
-            "shap_value": 0.2574
-          },
-          {
-            "feature": "amount",
-            "shap_value": 0.112
-          },
-          {
-            "feature": "sender_receiver_edge_fraud_rate",
-            "shap_value": 0.1141
-          },
-          {
-            "feature": "oldbalanceOrg",
-            "shap_value": 0.0289
-          },
-          {
-            "feature": "sender_out_degree",
-            "shap_value": 0.0404
-          }
-        ],
-        "summary": "Transaction flagged as HIGH because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
-      }
+      "actual_is_fraud": 0,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.77",
+        "Origin balance was completely drained after this CASH_OUT",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
     },
     {
-      "transaction_id": "TXN100009",
-      "fraud_probability": 0.5891,
+      "rank": 12,
+      "row_index": 11,
+      "sender": "C100011",
+      "receiver": "C200011",
+      "transaction_type": "CASH_OUT",
+      "amount": 349903.68,
+      "fraud_probability": 0.6349,
       "predicted_fraud": 1,
       "risk_band": "HIGH",
-      "type": "CASH_OUT",
-      "amount": 487349.64,
-      "explanation": {
-        "top_features": [
-          {
-            "feature": "receiver_fraud_rate",
-            "shap_value": 0.3024
-          },
-          {
-            "feature": "amount",
-            "shap_value": 0.1409
-          },
-          {
-            "feature": "sender_receiver_edge_fraud_rate",
-            "shap_value": 0.0606
-          },
-          {
-            "feature": "oldbalanceOrg",
-            "shap_value": 0.07
-          },
-          {
-            "feature": "sender_out_degree",
-            "shap_value": 0.0689
-          }
-        ],
-        "summary": "Transaction flagged as HIGH because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
-      }
+      "actual_is_fraud": 0,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.69",
+        "Origin balance was completely drained after this CASH_OUT",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
+    },
+    {
+      "rank": 13,
+      "row_index": 12,
+      "sender": "C100012",
+      "receiver": "C200012",
+      "transaction_type": "TRANSFER",
+      "amount": 748276.32,
+      "fraud_probability": 0.5944,
+      "predicted_fraud": 1,
+      "risk_band": "HIGH",
+      "actual_is_fraud": 0,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.65",
+        "Origin balance was completely drained after this TRANSFER",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
+    },
+    {
+      "rank": 14,
+      "row_index": 13,
+      "sender": "C100013",
+      "receiver": "C200013",
+      "transaction_type": "CASH_OUT",
+      "amount": 652772.04,
+      "fraud_probability": 0.5751,
+      "predicted_fraud": 1,
+      "risk_band": "HIGH",
+      "actual_is_fraud": 0,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.48",
+        "Origin balance was completely drained after this TRANSFER",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
+    },
+    {
+      "rank": 15,
+      "row_index": 14,
+      "sender": "C100014",
+      "receiver": "C200014",
+      "transaction_type": "TRANSFER",
+      "amount": 345511.98,
+      "fraud_probability": 0.5458,
+      "predicted_fraud": 1,
+      "risk_band": "HIGH",
+      "actual_is_fraud": 0,
+      "reasons": [
+        "Receiver has historical incoming fraud rate of 0.43",
+        "Origin balance was completely drained after this CASH_OUT",
+        "Transaction amount exceeds 95th percentile of normal customer activity",
+        "High sender out-degree within current 1-hour window"
+      ]
     }
   ]
 }
