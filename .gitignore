@@ -39,14 +39,11 @@ models/artifacts/*
 !models/artifacts/.gitkeep
 
 # Reports
-reports/figures/*
-reports/metrics/*
-!reports/figures/.gitkeep
-!reports/metrics/.gitkeep
+reports/model_cards/*
 !reports/model_cards/.gitkeep
-# Allow dashboard artifacts
-!reports/metrics/final_risk_scoring_report.json
-!reports/metrics/baseline_vs_graph_comparison.json
+# Allow all dashboard report artifacts
+reports/figures/.gitkeep
+reports/metrics/.gitkeep
 
 # OS files
 .DS_Store

@@ -1,0 +1,15 @@
+{
+  "num_nodes": 120450,
+  "num_edges": 532909,
+  "average_degree": 8.85,
+  "density": 7.35e-05,
+  "num_connected_components": 8432,
+  "largest_component_size": 98210,
+  "average_clustering_coefficient": 0.0021,
+  "transaction_types_in_graph": [
+    "TRANSFER",
+    "CASH_OUT"
+  ],
+  "fraud_edges": 8213,
+  "non_fraud_edges": 524696
+}

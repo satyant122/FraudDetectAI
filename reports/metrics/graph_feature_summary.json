@@ -1,0 +1,63 @@
+{
+  "num_samples": 5000,
+  "graph_features": {
+    "sender_out_degree": {
+      "mean": 4.23,
+      "std": 6.81,
+      "min": 1,
+      "max": 142
+    },
+    "sender_in_degree": {
+      "mean": 2.15,
+      "std": 4.32,
+      "min": 0,
+      "max": 98
+    },
+    "receiver_in_degree": {
+      "mean": 5.67,
+      "std": 9.45,
+      "min": 1,
+      "max": 215
+    },
+    "receiver_out_degree": {
+      "mean": 1.89,
+      "std": 3.21,
+      "min": 0,
+      "max": 67
+    },
+    "sender_total_amount_out": {
+      "mean": 185432.1,
+      "std": 412305.6,
+      "min": 100.0,
+      "max": 8500000.0
+    },
+    "receiver_total_amount_in": {
+      "mean": 210543.8,
+      "std": 520412.3,
+      "min": 50.0,
+      "max": 12000000.0
+    },
+    "receiver_fraud_rate": {
+      "mean": 0.0089,
+      "std": 0.045,
+      "min": 0.0,
+      "max": 1.0
+    },
+    "sender_receiver_edge_fraud_rate": {
+      "mean": 0.0052,
+      "std": 0.038,
+      "min": 0.0,
+      "max": 1.0
+    }
+  },
+  "correlation_with_fraud": {
+    "sender_out_degree": 0.12,
+    "sender_in_degree": 0.05,
+    "receiver_in_degree": -0.03,
+    "receiver_out_degree": 0.08,
+    "sender_total_amount_out": 0.15,
+    "receiver_total_amount_in": 0.09,
+    "receiver_fraud_rate": 0.42,
+    "sender_receiver_edge_fraud_rate": 0.38
+  }
+}

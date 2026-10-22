@@ -1,0 +1,335 @@
+{
+  "num_explanations": 10,
+  "explanations": [
+    {
+      "transaction_id": "TXN100000",
+      "fraud_probability": 0.9572,
+      "predicted_fraud": 1,
+      "risk_band": "CRITICAL",
+      "type": "TRANSFER",
+      "amount": 367057.33,
+      "explanation": {
+        "top_features": [
+          {
+            "feature": "receiver_fraud_rate",
+            "shap_value": 0.1592
+          },
+          {
+            "feature": "amount",
+            "shap_value": 0.1073
+          },
+          {
+            "feature": "sender_receiver_edge_fraud_rate",
+            "shap_value": 0.0789
+          },
+          {
+            "feature": "oldbalanceOrg",
+            "shap_value": 0.0264
+          },
+          {
+            "feature": "sender_out_degree",
+            "shap_value": 0.0263
+          }
+        ],
+        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
+      }
+    },
+    {
+      "transaction_id": "TXN100001",
+      "fraud_probability": 0.902,
+      "predicted_fraud": 1,
+      "risk_band": "CRITICAL",
+      "type": "CASH_OUT",
+      "amount": 254034.64,
+      "explanation": {
+        "top_features": [
+          {
+            "feature": "receiver_fraud_rate",
+            "shap_value": 0.3168
+          },
+          {
+            "feature": "amount",
+            "shap_value": 0.0995
+          },
+          {
+            "feature": "sender_receiver_edge_fraud_rate",
+            "shap_value": 0.0855
+          },
+          {
+            "feature": "oldbalanceOrg",
+            "shap_value": 0.0736
+          },
+          {
+            "feature": "sender_out_degree",
+            "shap_value": 0.0591
+          }
+        ],
+        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
+      }
+    },
+    {
+      "transaction_id": "TXN100002",
+      "fraud_probability": 0.8737,
+      "predicted_fraud": 1,
+      "risk_band": "CRITICAL",
+      "type": "TRANSFER",
+      "amount": 324108.95,
+      "explanation": {
+        "top_features": [
+          {
+            "feature": "receiver_fraud_rate",
+            "shap_value": 0.1842
+          },
+          {
+            "feature": "amount",
+            "shap_value": 0.1675
+          },
+          {
+            "feature": "sender_receiver_edge_fraud_rate",
+            "shap_value": 0.0663
+          },
+          {
+            "feature": "oldbalanceOrg",
+            "shap_value": 0.0504
+          },
+          {
+            "feature": "sender_out_degree",
+            "shap_value": 0.0793
+          }
+        ],
+        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
+      }
+    },
+    {
+      "transaction_id": "TXN100003",
+      "fraud_probability": 0.8328,
+      "predicted_fraud": 1,
+      "risk_band": "CRITICAL",
+      "type": "TRANSFER",
+      "amount": 358076.41,
+      "explanation": {
+        "top_features": [
+          {
+            "feature": "receiver_fraud_rate",
+            "shap_value": 0.3186
+          },
+          {
+            "feature": "amount",
+            "shap_value": 0.1731
+          },
+          {
+            "feature": "sender_receiver_edge_fraud_rate",
+            "shap_value": 0.0729
+          },
+          {
+            "feature": "oldbalanceOrg",
+            "shap_value": 0.0226
+          },
+          {
+            "feature": "sender_out_degree",
+            "shap_value": 0.0321
+          }
+        ],
+        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
+      }
+    },
+    {
+      "transaction_id": "TXN100004",
+      "fraud_probability": 0.7854,
+      "predicted_fraud": 1,
+      "risk_band": "CRITICAL",
+      "type": "TRANSFER",
+      "amount": 460911.26,
+      "explanation": {
+        "top_features": [
+          {
+            "feature": "receiver_fraud_rate",
+            "shap_value": 0.2634
+          },
+          {
+            "feature": "amount",
+            "shap_value": 0.1661
+          },
+          {
+            "feature": "sender_receiver_edge_fraud_rate",
+            "shap_value": 0.0713
+          },
+          {
+            "feature": "oldbalanceOrg",
+            "shap_value": 0.0599
+          },
+          {
+            "feature": "sender_out_degree",
+            "shap_value": 0.0719
+          }
+        ],
+        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
+      }
+    },
+    {
+      "transaction_id": "TXN100005",
+      "fraud_probability": 0.7529,
+      "predicted_fraud": 1,
+      "risk_band": "CRITICAL",
+      "type": "TRANSFER",
+      "amount": 169196.07,
+      "explanation": {
+        "top_features": [
+          {
+            "feature": "receiver_fraud_rate",
+            "shap_value": 0.1993
+          },
+          {
+            "feature": "amount",
+            "shap_value": 0.1474
+          },
+          {
+            "feature": "sender_receiver_edge_fraud_rate",
+            "shap_value": 0.0763
+          },
+          {
+            "feature": "oldbalanceOrg",
+            "shap_value": 0.0668
+          },
+          {
+            "feature": "sender_out_degree",
+            "shap_value": 0.0728
+          }
+        ],
+        "summary": "Transaction flagged as CRITICAL because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
+      }
+    },
+    {
+      "transaction_id": "TXN100006",
+      "fraud_probability": 0.708,
+      "predicted_fraud": 1,
+      "risk_band": "HIGH",
+      "type": "TRANSFER",
+      "amount": 498796.6,
+      "explanation": {
+        "top_features": [
+          {
+            "feature": "receiver_fraud_rate",
+            "shap_value": 0.1777
+          },
+          {
+            "feature": "amount",
+            "shap_value": 0.1392
+          },
+          {
+            "feature": "sender_receiver_edge_fraud_rate",
+            "shap_value": 0.1256
+          },
+          {
+            "feature": "oldbalanceOrg",
+            "shap_value": 0.0889
+          },
+          {
+            "feature": "sender_out_degree",
+            "shap_value": 0.0207
+          }
+        ],
+        "summary": "Transaction flagged as HIGH because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
+      }
+    },
+    {
+      "transaction_id": "TXN100007",
+      "fraud_probability": 0.6632,
+      "predicted_fraud": 1,
+      "risk_band": "HIGH",
+      "type": "CASH_OUT",
+      "amount": 318384.06,
+      "explanation": {
+        "top_features": [
+          {
+            "feature": "receiver_fraud_rate",
+            "shap_value": 0.227
+          },
+          {
+            "feature": "amount",
+            "shap_value": 0.1515
+          },
+          {
+            "feature": "sender_receiver_edge_fraud_rate",
+            "shap_value": 0.0968
+          },
+          {
+            "feature": "oldbalanceOrg",
+            "shap_value": 0.0401
+          },
+          {
+            "feature": "sender_out_degree",
+            "shap_value": 0.0487
+          }
+        ],
+        "summary": "Transaction flagged as HIGH because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
+      }
+    },
+    {
+      "transaction_id": "TXN100008",
+      "fraud_probability": 0.6388,
+      "predicted_fraud": 1,
+      "risk_band": "HIGH",
+      "type": "TRANSFER",
+      "amount": 356769.67,
+      "explanation": {
+        "top_features": [
+          {
+            "feature": "receiver_fraud_rate",
+            "shap_value": 0.2574
+          },
+          {
+            "feature": "amount",
+            "shap_value": 0.112
+          },
+          {
+            "feature": "sender_receiver_edge_fraud_rate",
+            "shap_value": 0.1141
+          },
+          {
+            "feature": "oldbalanceOrg",
+            "shap_value": 0.0289
+          },
+          {
+            "feature": "sender_out_degree",
+            "shap_value": 0.0404
+          }
+        ],
+        "summary": "Transaction flagged as HIGH because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
+      }
+    },
+    {
+      "transaction_id": "TXN100009",
+      "fraud_probability": 0.5891,
+      "predicted_fraud": 1,
+      "risk_band": "HIGH",
+      "type": "CASH_OUT",
+      "amount": 487349.64,
+      "explanation": {
+        "top_features": [
+          {
+            "feature": "receiver_fraud_rate",
+            "shap_value": 0.3024
+          },
+          {
+            "feature": "amount",
+            "shap_value": 0.1409
+          },
+          {
+            "feature": "sender_receiver_edge_fraud_rate",
+            "shap_value": 0.0606
+          },
+          {
+            "feature": "oldbalanceOrg",
+            "shap_value": 0.07
+          },
+          {
+            "feature": "sender_out_degree",
+            "shap_value": 0.0689
+          }
+        ],
+        "summary": "Transaction flagged as HIGH because: receiver has high fraud rate, large transfer amount, sender-receiver relationship has previous fraud signal."
+      }
+    }
+  ]
+}

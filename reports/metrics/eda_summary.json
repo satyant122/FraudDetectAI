@@ -1,0 +1,33 @@
+{
+  "num_transactions": 6362620,
+  "num_features": 11,
+  "fraud_rate": 0.00129,
+  "class_distribution": {
+    "0": 6354407,
+    "1": 8213
+  },
+  "transaction_type_counts": {
+    "CASH_OUT": 2237500,
+    "PAYMENT": 2151495,
+    "CASH_IN": 1399284,
+    "TRANSFER": 532909,
+    "DEBIT": 41432
+  },
+  "amount_statistics": {
+    "mean": 179861.9,
+    "std": 603858.23,
+    "min": 0.0,
+    "25%": 13389.57,
+    "50%": 74871.94,
+    "75%": 208721.26,
+    "max": 92445516.64
+  },
+  "missing_values": {},
+  "fraud_by_type": {
+    "TRANSFER": 4097,
+    "CASH_OUT": 4116,
+    "PAYMENT": 0,
+    "CASH_IN": 0,
+    "DEBIT": 0
+  }
+}

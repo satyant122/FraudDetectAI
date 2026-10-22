@@ -1,0 +1,20 @@
+{
+  "model_name": "random_forest_graph_enhanced",
+  "importance_type": "feature_importances_",
+  "features": {
+    "receiver_fraud_rate": 0.182,
+    "sender_receiver_edge_fraud_rate": 0.156,
+    "amount": 0.134,
+    "oldbalanceOrg": 0.098,
+    "newbalanceOrig": 0.087,
+    "sender_total_amount_out": 0.072,
+    "receiver_total_amount_in": 0.065,
+    "sender_out_degree": 0.054,
+    "oldbalanceDest": 0.048,
+    "newbalanceDest": 0.041,
+    "receiver_in_degree": 0.028,
+    "sender_in_degree": 0.019,
+    "receiver_out_degree": 0.016
+  },
+  "top_n": 13
+}
