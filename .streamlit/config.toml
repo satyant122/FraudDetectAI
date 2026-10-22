@@ -1,0 +1,7 @@
+[server]
+headless = true
+enableCORS = false
+
+[runner]
+# Ensure project root and src/ are on the Python path on Streamlit Cloud
+postScriptPath = ""
