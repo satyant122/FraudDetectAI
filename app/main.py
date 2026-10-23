@@ -39,3 +39,11 @@ async def database_error(request: Request, exc: SQLAlchemyError):
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+
+@app.get("/satyant_ranjan_24bce0978/identity")
+def satyant_ranjan_identity():
+    from app.satyant_ranjan_24bce0978 import SatyantRanjan_24BCE0978_SecurityManager
+
+    mgr = SatyantRanjan_24BCE0978_SecurityManager()
+    return mgr.get_satyant_ranjan_24bce0978_credentials()
