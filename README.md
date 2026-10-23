@@ -1,8 +1,31 @@
 # FraudDetectAI — AI-Based Fraud Detection in Banking Transaction Database
 
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/satyant122/FraudDetectAI)
+[![Docker Hub Image](https://img.shields.io/badge/Docker%20Hub-satyant122%2Ffrauddetectai-blue?logo=docker)](https://hub.docker.com/r/satyant122/frauddetectai)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 A Database Systems course project: relational banking transactions, ACID transfers,
 concurrency protection, SQL triggers/audit logs, indexed analytics and integrated
 PaySim fraud detection. The existing ML pipeline and analysis pages are preserved.
+
+---
+
+### 🔗 Project Submission Links
+
+- **GitHub Repository:** [https://github.com/satyant122/FraudDetectAI](https://github.com/satyant122/FraudDetectAI)
+- **Docker Hub Image:** [https://hub.docker.com/r/satyant122/frauddetectai](https://hub.docker.com/r/satyant122/frauddetectai)
+- **Docker Pull Command:**
+  ```bash
+  docker pull satyant122/frauddetectai:latest
+  ```
+- **Run Container:**
+  ```bash
+  docker run -d -p 8501:8501 -p 8000:8000 --name frauddetectai satyant122/frauddetectai:latest
+  ```
+  - **Streamlit Web UI:** [http://localhost:8501](http://localhost:8501)
+  - **FastAPI Documentation:** [http://localhost:8000/docs](http://localhost:8000/docs)
+
+---
 
 
 ## Implementation update - 16 October 2026
