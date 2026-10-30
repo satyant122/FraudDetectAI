@@ -14,7 +14,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import (
-    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether, HRFlowable
+    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, KeepTogether, HRFlowable, Image
 )
 from reportlab.pdfgen import canvas
 
@@ -65,7 +65,7 @@ class NumberedCanvas(canvas.Canvas):
         self.restoreState()
 
 
-def build_pdf():
+def build_pdf(streamlit_url="https://frauddetectai.streamlit.app"):
     doc = SimpleDocTemplate(
         str(PDF_PATH),
         pagesize=letter,
@@ -191,6 +191,18 @@ def build_pdf():
         textColor=c_dark,
     )
 
+    caption_style = ParagraphStyle(
+        "CaptionStyle",
+        parent=styles["Normal"],
+        fontName="Helvetica-Bold",
+        fontSize=8,
+        leading=11,
+        textColor=c_primary,
+        alignment=1,
+        spaceBefore=4,
+        spaceAfter=8,
+    )
+
     story = []
 
     # ==================== PAGE 1: OFFICIAL ASSESSMENT HEADER ====================
@@ -235,16 +247,17 @@ def build_pdf():
         ('RIGHTPADDING', (0, 0), (-1, -1), 8),
     ]))
     story.append(header_table)
-    story.append(Spacer(1, 12))
+    story.append(Spacer(1, 10))
 
     # Assessment Details & Live Links Box
     links_data = [
         [Paragraph("<b>CRITICAL SUBMISSION REPOSITORIES & DEPLOYMENT LINKS</b>", table_header_style)],
-        [Paragraph("<b>GitHub Repository (Branches: main, dev):</b> <font color='#2563EB'><u>https://github.com/satyant122/FraudDetectAI</u></font><br/>"
+        [Paragraph(f"<b>Live Working Streamlit Web App:</b> <font color='#2563EB'><u>{streamlit_url}</u></font><br/>"
+                   "<b>GitHub Repository (Branches: main, dev):</b> <font color='#2563EB'><u>https://github.com/satyant122/FraudDetectAI</u></font><br/>"
                    "<b>Docker Hub Image:</b> <font color='#2563EB'><u>https://hub.docker.com/r/satyant122/frauddetectai</u></font><br/>"
-                   "<b>Docker Pull:</b> <code>docker pull satyant122/frauddetectai:latest</code><br/>"
-                   "<b>Docker Run:</b> <code>docker run -d -p 8501:8501 -p 8000:8000 satyant122/frauddetectai:latest</code><br/>"
-                   "<b>Live Dashboard (Streamlit):</b> Port 8501 (UI) & Port 8000 (FastAPI Docs)<br/>"
+                   "<b>Docker Pull Command:</b> <code>docker pull satyant122/frauddetectai:latest</code><br/>"
+                   "<b>Docker Run Command:</b> <code>docker run -d -p 8501:8501 -p 8000:8000 satyant122/frauddetectai:latest</code><br/>"
+                   "<b>Architecture:</b> Streamlit Web UI (Port 8501) + FastAPI REST Backend & Swagger Docs (Port 8000)<br/>"
                    "<b>Automated Test Suite:</b> 394 passed, 1 skipped (0 failures, 100% pass rate)", table_cell_style)]
     ]
     links_table = Table(links_data, colWidths=[504])
@@ -252,13 +265,13 @@ def build_pdf():
         ('BACKGROUND', (0, 0), (-1, 0), c_primary),
         ('BACKGROUND', (0, 1), (-1, 1), colors.HexColor("#EFF6FF")),
         ('BOX', (0, 0), (-1, -1), 1, c_secondary),
-        ('TOPPADDING', (0, 0), (-1, -1), 6),
-        ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+        ('TOPPADDING', (0, 0), (-1, -1), 5),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
         ('LEFTPADDING', (0, 0), (-1, -1), 8),
         ('RIGHTPADDING', (0, 0), (-1, -1), 8),
     ]))
     story.append(links_table)
-    story.append(Spacer(1, 12))
+    story.append(Spacer(1, 10))
 
     # ==================== SECTION 1: PROBLEM STATEMENT & PROJECT PLANNING ====================
     story.append(Paragraph("1. Problem Statement & Project Planning (2 Marks)", h1_style))
@@ -282,7 +295,7 @@ def build_pdf():
     story.append(Paragraph("• Enforce relational integrity through strict primary keys, foreign keys with referential actions, and domain CHECK constraints.", bullet_style))
     story.append(Paragraph("• Implement native SQL triggers for automatic audit logging and real-time fraud alert generation on risk threshold breaches.", bullet_style))
     story.append(Paragraph("• Guarantee ACID properties during funds transfers through ordered row locking (preventing deadlocks) and automatic rollback on failure.", bullet_style))
-    story.append(Paragraph("• Build an interactive multi-page web application (Streamlit + FastAPI) with role-based access control (RBAC) and Docker containerization.", bullet_style))
+    story.append(Paragraph("• Build an interactive multi-page web application (Streamlit + FastAPI) with role-based access control (RBAC), cloud deployment, and Docker containerization.", bullet_style))
 
     story.append(Paragraph("<b>1.4 Scope:</b>", h2_style))
     story.append(Paragraph(
@@ -299,7 +312,7 @@ def build_pdf():
         [Paragraph("Relational Database", table_cell_bold), Paragraph("PostgreSQL 17 (Production) / SQLite 3 (Embedded Standalone)", table_cell_style)],
         [Paragraph("Object-Relational Mapping", table_cell_bold), Paragraph("SQLAlchemy 2.0 Core & ORM, Alembic 1.13 Database Migrations", table_cell_style)],
         [Paragraph("Backend Framework", table_cell_bold), Paragraph("FastAPI 0.115, Uvicorn 0.30 ASGI Server, Pydantic v2", table_cell_style)],
-        [Paragraph("Frontend / Dashboard", table_cell_bold), Paragraph("Streamlit 1.50+ Interactive Multi-Page Analytical Web App", table_cell_style)],
+        [Paragraph("Frontend / Dashboard", table_cell_bold), Paragraph(f"Streamlit 1.50+ Interactive Multi-Page Analytical Web App ({streamlit_url})", table_cell_style)],
         [Paragraph("Machine Learning & Graph", table_cell_bold), Paragraph("Scikit-Learn (Random Forest, Gradient Boosting), NetworkX 3.3, NumPy, Pandas", table_cell_style)],
         [Paragraph("Security & Authentication", table_cell_bold), Paragraph("BCrypt password hashing, Single Users RBAC table, Dotenv secrets", table_cell_style)],
         [Paragraph("DevOps & Containerization", table_cell_bold), Paragraph("Docker, Docker Hub Registry, GitHub Actions CI/CD, Pytest (394 tests)", table_cell_style)],
@@ -495,7 +508,8 @@ def build_pdf():
     story.append(Paragraph("4. Application Development & User Interface (4 Marks)", h1_style))
     story.append(HRFlowable(width="100%", thickness=1, color=c_primary, spaceBefore=2, spaceAfter=8))
     story.append(Paragraph(
-        "The application integrates an asynchronous FastAPI REST API backend with a responsive Streamlit web application. "
+        f"The application integrates an asynchronous FastAPI REST API backend with a responsive Streamlit web application, "
+        f"publicly accessible at <b><font color='#2563EB'><u>{streamlit_url}</u></font></b>. "
         "The web interface includes interactive multi-page navigation across 6 distinct modules: Overview, Fraud Detection, "
         "Graph Explorer, Model Performance, Explainability, and DBMS Demonstration.", body_style
     ))
@@ -539,6 +553,7 @@ def build_pdf():
     story.append(Paragraph("• <b>Branching Strategy:</b> Maintained on <b>two active branches: <code>main</code> (production) and <code>dev</code> (staging)</b>, complying with rubric Page 7.", bullet_style))
     story.append(Paragraph("• <b>Database Backup & Recovery:</b> Native SQLite backup via <code>sqlite3 data/banking.db \".backup 'backup_banking.db'\"</code> and PostgreSQL backup via <code>pg_dump -U frauddetect -d frauddetect > backup.sql</code> with restore via <code>psql < backup.sql</code>.", bullet_style))
     story.append(Paragraph("• <b>Docker Hub Deployment:</b> Multi-stage Docker image published at <font color='#2563EB'><u>https://hub.docker.com/r/satyant122/frauddetectai</u></font>.", bullet_style))
+    story.append(Paragraph(f"• <b>Cloud Deployment:</b> Live production application deployed on Streamlit Community Cloud at <font color='#2563EB'><u>{streamlit_url}</u></font>.", bullet_style))
 
     story.append(Spacer(1, 8))
     story.append(Paragraph("7. Bonus & Industry Best Practices (+3 Bonus Marks)", h1_style))
@@ -616,12 +631,12 @@ def build_pdf():
         [Paragraph("1. Problem Statement & Planning", table_cell_bold), Paragraph("2", table_cell_style), Paragraph("Problem statement, objectives, scope, tech stack, deliverables, Gantt chart", table_cell_style)],
         [Paragraph("2. Database Design", table_cell_bold), Paragraph("4", table_cell_style), Paragraph("12 tables, 4 entities, 3+ relationships, ER diagram, Data dictionary, 3NF proof", table_cell_style)],
         [Paragraph("3. Database Implementation", table_cell_bold), Paragraph("7", table_cell_style), Paragraph("DDL, CRUD, joins, views, aggregate queries, ACID transactions, triggers, ORM", table_cell_style)],
-        [Paragraph("4. Application Development", table_cell_bold), Paragraph("4", table_cell_style), Paragraph("FastAPI + Streamlit responsive UI, search, filtering, pagination, form validation", table_cell_style)],
+        [Paragraph("4. Application Development", table_cell_bold), Paragraph("4", table_cell_style), Paragraph(f"FastAPI + Streamlit responsive UI ({streamlit_url}), search, filtering, pagination, form validation", table_cell_style)],
         [Paragraph("5. Auth, RBAC & Security", table_cell_bold), Paragraph("5", table_cell_style), Paragraph("Single Users table with Role, BCrypt hashing, SQL injection prevention, .env", table_cell_style)],
-        [Paragraph("6. Professional Dev Practices", table_cell_bold), Paragraph("5", table_cell_style), Paragraph("GitHub repository, main & dev branches, .gitignore, backup/recovery, Docker Hub", table_cell_style)],
+        [Paragraph("6. Professional Dev Practices", table_cell_bold), Paragraph("5", table_cell_style), Paragraph(f"GitHub (main & dev), .gitignore, backup/recovery, Docker Hub, Streamlit Cloud ({streamlit_url})", table_cell_style)],
         [Paragraph("Other: CI/CD Pipeline", table_cell_bold), Paragraph("+1", table_cell_style), Paragraph("GitHub Actions automated build & push to Docker Hub", table_cell_style)],
         [Paragraph("Other: Testing & Best Practice", table_cell_bold), Paragraph("+1", table_cell_style), Paragraph("Automated testing (394 Pytest test cases passed), Trigger audit logging", table_cell_style)],
-        [Paragraph("Other: Custom / Cloud Deploy", table_cell_bold), Paragraph("+1", table_cell_style), Paragraph("Multi-port Docker Hub container (Ports 8501 & 8000) + Streamlit Cloud ready", table_cell_style)],
+        [Paragraph("Other: Custom / Cloud Deploy", table_cell_bold), Paragraph("+1", table_cell_style), Paragraph(f"Multi-port Docker Hub container (Ports 8501 & 8000) + Live Streamlit Cloud ({streamlit_url})", table_cell_style)],
         [Paragraph("<b>TOTAL SCORE CLAIMED</b>", table_cell_bold), Paragraph("<b>33 / 30</b>", table_cell_bold), Paragraph("<b>Complete implementation satisfying all core & bonus criteria</b>", table_cell_bold)],
     ]
     eval_table = Table(eval_data, colWidths=[150, 44, 310])
@@ -633,7 +648,7 @@ def build_pdf():
         ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
     ]))
     story.append(eval_table)
-    story.append(Spacer(1, 14))
+    story.append(Spacer(1, 10))
 
     declaration_text = (
         "<b>STUDENT DECLARATION:</b><br/>"
@@ -646,9 +661,74 @@ def build_pdf():
     )
     story.append(Paragraph(declaration_text, body_style))
 
+    # ==================== SECTION 10: APPLICATION SCREENSHOTS & LIVE OUTPUT ====================
+    story.append(PageBreak())
+    story.append(Paragraph("10. Working Application Screenshots & Live Output Evidence", h1_style))
+    story.append(HRFlowable(width="100%", thickness=1, color=c_primary, spaceBefore=2, spaceAfter=8))
+    story.append(Paragraph(
+        f"In compliance with Instructions 2.3 and 8 of the assessment rubric (<i>'Input and Output / Screenshot with Timestamp'</i>), "
+        f"the following screenshots capture the live deployed application operating at <b><font color='#2563EB'><u>{streamlit_url}</u></font></b> "
+        f"and across local container environments:", body_style
+    ))
+    story.append(Spacer(1, 6))
+
+    img_docs = ROOT / "docs"
+
+    # Screenshot 1: Overview Dashboard
+    p_overview = img_docs / "overview.png"
+    if p_overview.exists():
+        story.append(Image(str(p_overview), width=480, height=255))
+        story.append(Paragraph("<b>Figure 1: Overview Dashboard</b> — High-level KPI summary (Transactions Scored, Predicted Fraud, Average Fraud Probability, Risk Band counts, and PaySim Dataset EDA Distribution).", caption_style))
+        story.append(Spacer(1, 10))
+
+    # Screenshot 2: Fraud Detection & Filters
+    p_fraud = img_docs / "fraud_detection.png"
+    if p_fraud.exists():
+        story.append(Image(str(p_fraud), width=480, height=255))
+        story.append(Paragraph("<b>Figure 2: Real-Time Fraud Detection & Risk Scoring Table</b> — Interactive multi-criteria filtering by risk band (Low, Medium, High, Critical), minimum probability slider, and scored transactional ledger.", caption_style))
+
+    story.append(PageBreak())
+
+    # Screenshot 3: Graph Explorer
+    p_graph = img_docs / "graph_explorer.png"
+    if p_graph.exists():
+        story.append(Image(str(p_graph), width=480, height=255))
+        story.append(Paragraph("<b>Figure 3: Graph Network Topology Explorer</b> — Visualizing nodes, directed transfer edges, connected components, graph density, and top sender/receiver degree distributions.", caption_style))
+        story.append(Spacer(1, 10))
+
+    # Screenshot 4: Model Performance
+    p_model = img_docs / "model_performance.png"
+    if p_model.exists():
+        story.append(Image(str(p_model), width=480, height=255))
+        story.append(Paragraph("<b>Figure 4: Machine Learning Model Performance & Threshold Tuning</b> — Comparative metrics (Accuracy, Precision, Recall, F1, ROC-AUC) between Baseline RF and Graph-Enhanced RF with threshold optimization.", caption_style))
+
+    story.append(PageBreak())
+
+    # Screenshot 5: Explainability
+    p_explain = img_docs / "explainability.png"
+    if p_explain.exists():
+        story.append(Image(str(p_explain), width=480, height=255))
+        story.append(Paragraph("<b>Figure 5: Explainable AI (XAI) & SHAP Reasoning Module</b> — Global feature importance ranking (e.g., receiver fraud rate, edge frequency, balance delta) and individual transaction explanation breakdowns.", caption_style))
+        story.append(Spacer(1, 10))
+
+    # Screenshot 6: Live Running Project / Runtime Console
+    p_running = img_docs / "runningProject.png"
+    if p_running.exists():
+        story.append(Image(str(p_running), width=480, height=255))
+        story.append(Paragraph("<b>Figure 6: Live Runtime Execution & Console Verification</b> — Terminal confirmation of database migrations, model checkpoint loading, uvicorn ASGI server initialization, and Streamlit worker startup.", caption_style))
+
+    story.append(PageBreak())
+
+    # Screenshot 7: App Results & Demonstration
+    p_results = img_docs / "appResults.png"
+    if p_results.exists():
+        story.append(Image(str(p_results), width=480, height=255))
+        story.append(Paragraph("<b>Figure 7: Full System Verification & Application Results</b> — Demonstration of live ACID balance updates, SQL triggers, customer audit history, and transaction integrity verification.", caption_style))
+
     doc.build(story, canvasmaker=NumberedCanvas)
     print(f"PDF successfully generated at: {PDF_PATH}")
 
 
 if __name__ == "__main__":
-    build_pdf()
+    url = sys.argv[1] if len(sys.argv) > 1 else "https://frauddetectai.streamlit.app"
+    build_pdf(url)
