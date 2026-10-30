@@ -65,7 +65,7 @@ class NumberedCanvas(canvas.Canvas):
         self.restoreState()
 
 
-def build_pdf(streamlit_url="https://frauddetectai.streamlit.app"):
+def build_pdf(streamlit_url="https://frauddetectai-wjnetqjnsycpaa7tu9gegx.streamlit.app"):
     doc = SimpleDocTemplate(
         str(PDF_PATH),
         pagesize=letter,
@@ -730,5 +730,5 @@ def build_pdf(streamlit_url="https://frauddetectai.streamlit.app"):
 
 
 if __name__ == "__main__":
-    url = sys.argv[1] if len(sys.argv) > 1 else "https://frauddetectai.streamlit.app"
+    url = sys.argv[1] if len(sys.argv) > 1 else "https://frauddetectai-wjnetqjnsycpaa7tu9gegx.streamlit.app"
     build_pdf(url)

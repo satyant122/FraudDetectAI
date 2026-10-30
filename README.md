@@ -1,6 +1,6 @@
 # FraudDetectAI — AI-Based Fraud Detection in Banking Transaction Database
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://frauddetectai.streamlit.app)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://frauddetectai-wjnetqjnsycpaa7tu9gegx.streamlit.app)
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/satyant122/FraudDetectAI)
 [![Docker Hub Image](https://img.shields.io/badge/Docker%20Hub-satyant122%2Ffrauddetectai-blue?logo=docker)](https://hub.docker.com/r/satyant122/frauddetectai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -13,7 +13,7 @@ PaySim fraud detection. The existing ML pipeline and analysis pages are preserve
 
 ### 🔗 Project Submission Links
 
-- **Live Streamlit Web Application:** [https://frauddetectai.streamlit.app](https://frauddetectai.streamlit.app)
+- **Live Streamlit Web Application:** [https://frauddetectai-wjnetqjnsycpaa7tu9gegx.streamlit.app](https://frauddetectai-wjnetqjnsycpaa7tu9gegx.streamlit.app)
 - **GitHub Repository (main & dev):** [https://github.com/satyant122/FraudDetectAI](https://github.com/satyant122/FraudDetectAI)
 - **Docker Hub Image:** [https://hub.docker.com/r/satyant122/frauddetectai](https://hub.docker.com/r/satyant122/frauddetectai)
 - **Official Submission PDF:** [24BCE0978_L25_IA9&10_Proj_SATYANT_RANJAN.pdf](output/pdf/24BCE0978_L25_IA9%2610_Proj_SATYANT_RANJAN.pdf)
